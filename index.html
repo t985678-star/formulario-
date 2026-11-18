@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Contacto | ¡Nos encantaría conocerte!</title>
+  
+  <!-- Tipografías elegantes de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Hoja de estilos externa -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Estilos embebidos para garantizar renderizado inmediato y compatibilidad total -->
+  <style>
+    /* Estilos sincronizados con styles.css para visualización autónoma impecable */
+    :root {
+      --rosa-pastel: #FBC6DD;
+      --rosa-suave: #FCE0EC;
+      --rosa-acento: #EA5C9A;
+      --beige: #FFF9F1;
+      --crema: #F9DFC3;
+      --verde-natural: #E6F4D8;
+      --verde-suave: #BFD8A8;
+      --verde-acento: #4A7C32;
+      --marron-canela: #9A6A47;
+      --marron-canela-oscuro: #7A4326;
+      --marron-oscuro: #4E2915;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas interactivo para partículas flotantes de fondo -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Formas orgánicas y elementos botánicos decorativos flotantes -->
+  <div class="floating-decorations" aria-hidden="true">
+    <div class="organic-shape organic-shape-1"></div>
+    <div class="organic-shape organic-shape-2"></div>
+    <div class="organic-shape organic-shape-3"></div>
+
+    <!-- Hojas botánicas flotantes -->
+    <svg class="floating-leaf leaf-1" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#BFD8A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+    </svg>
+
+    <svg class="floating-leaf leaf-2" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FBC6DD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"></path>
+      <path d="M12 6c-3.31 0-6 2.69-6 6 0 2.22 1.21 4.15 3 5.19"></path>
+    </svg>
+
+    <svg class="floating-leaf leaf-3" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F9DFC3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+    </svg>
+
+    <svg class="floating-leaf leaf-4" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#BFD8A8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"></path>
+      <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4"></path>
+    </svg>
+  </div>
+
+  <!-- Contenedor central de la página -->
+  <main class="page-wrapper">
+
+    <!-- Barra superior de estado e información de conexiones -->
+    <header class="top-bar">
+      <div class="status-badge" id="status-badge" title="Estado de conexión con Google Sheets y EmailJS">
+        <span class="status-dot"></span>
+        <span id="status-badge-text">Conexiones preparadas</span>
+      </div>
+
+      <button type="button" class="config-toggle-btn" id="open-config-btn" title="Configurar Google Apps Script y EmailJS">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Conexiones</span>
+      </button>
+    </header>
+
+    <!-- Encabezado de la página -->
+    <section class="form-header">
+      <!-- Distintivo superior que destaca la categoría -->
+      <div class="header-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v4m0 12v4M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"></path>
+        </svg>
+        <span>Formulario de Contacto</span>
+      </div>
+
+      <!-- Título principal con diseño y personalidad -->
+      <h1 class="main-title">
+        ¡Nos encantaría <span class="highlight-word">conocerte!</span>
+      </h1>
+
+      <p class="main-subtitle">
+        Completa los siguientes campos y déjanos tu mensaje. Tu opinión es muy importante para nosotros.
+      </p>
+
+      <div class="header-divider" aria-hidden="true">
+        <span class="divider-line"></span>
+        <span class="divider-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2c1.1 0 2 .9 2 2 0 .74-.4 1.38-1 1.72V7c2.76 0 5 2.24 5 5 0 .74-.4 1.38-1 1.72V15c1.1 0 2 .9 2 2s-.9 2-2 2h-1.28c-.34.6-.98 1-1.72 1-1.1 0-2-.9-2-2 0-.74.4-1.38 1-1.72V16c-2.76 0-5-2.24-5-5 0-.74.4-1.38 1-1.72V8c-1.1 0-2-.9-2-2s.9-2 2-2h1.28c.34-.6.98-1 1.72-1m0 7a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+          </svg>
+        </span>
+        <span class="divider-line"></span>
+      </div>
+    </section>
+
+    <!-- Tarjeta principal de formulario (Efecto Glassmorphism) -->
+    <article class="form-card">
+
+      <!-- Adornos florales en las esquinas interiores de la tarjeta -->
+      <svg class="card-decor-corner corner-top-right" viewBox="0 0 100 100" fill="none" stroke="#FBC6DD" stroke-width="2">
+        <path d="M10,90 Q90,90 90,10" opacity="0.6"/>
+        <circle cx="85" cy="15" r="5" fill="#FBC6DD" opacity="0.4"/>
+        <path d="M60,60 Q80,50 85,25" opacity="0.5"/>
+        <path d="M60,60 Q50,80 25,85" opacity="0.5"/>
+      </svg>
+
+      <svg class="card-decor-corner corner-bottom-left" viewBox="0 0 100 100" fill="none" stroke="#BFD8A8" stroke-width="2">
+        <path d="M10,90 Q90,90 90,10" opacity="0.6"/>
+        <circle cx="85" cy="15" r="5" fill="#BFD8A8" opacity="0.4"/>
+        <path d="M60,60 Q80,50 85,25" opacity="0.5"/>
+        <path d="M60,60 Q50,80 25,85" opacity="0.5"/>
+      </svg>
+
+      <!-- Contenedor de campos del formulario -->
+      <div id="form-fields-wrapper" class="form-fields-wrapper">
+        <form id="contact-form" novalidate autocomplete="off">
+
+          <!-- 1. Campo: NOMBRE DE USUARIO -->
+          <div class="form-group" id="group-name">
+            <div class="label-container">
+              <label for="user-name" class="field-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Nombre Completo</span>
+              </label>
+              <span class="required-badge">Obligatorio</span>
+            </div>
+
+            <div class="input-wrapper">
+              <div class="input-icon-left" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+
+              <input 
+                type="text" 
+                id="user-name" 
+                name="nombre" 
+                class="form-input" 
+                placeholder="Ingresa tu nombre completo"
+                maxlength="70"
+                required
+                aria-describedby="error-name"
+              >
+
+              <!-- Indicador de verificación visual -->
+              <div class="status-indicator" aria-hidden="true">
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Mensaje de error animado -->
+            <div class="error-message" id="error-name" role="alert" aria-live="polite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span class="error-text"></span>
+            </div>
+          </div>
+
+          <!-- 2. Campo: CORREO ELECTRÓNICO -->
+          <div class="form-group" id="group-email">
+            <div class="label-container">
+              <label for="user-email" class="field-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <span>Correo Electrónico</span>
+              </label>
+              <span class="required-badge">Obligatorio</span>
+            </div>
+
+            <div class="input-wrapper">
+              <div class="input-icon-left" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+
+              <input 
+                type="email" 
+                id="user-email" 
+                name="email" 
+                class="form-input" 
+                placeholder="ejemplo@correo.com"
+                maxlength="90"
+                required
+                aria-describedby="error-email"
+              >
+
+              <!-- Indicador de verificación visual -->
+              <div class="status-indicator" aria-hidden="true">
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Mensaje de error animado -->
+            <div class="error-message" id="error-email" role="alert" aria-live="polite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span class="error-text"></span>
+            </div>
+          </div>
+
+          <!-- 3. Campo: COMENTARIO -->
+          <div class="form-group" id="group-comment">
+            <div class="label-container">
+              <label for="user-comment" class="field-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Tu Comentario</span>
+              </label>
+              <span class="required-badge">Mín. 20 caracteres</span>
+            </div>
+
+            <div class="input-wrapper textarea-wrapper">
+              <div class="input-icon-left" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </div>
+
+              <textarea 
+                id="user-comment" 
+                name="comentario" 
+                class="form-textarea" 
+                rows="4" 
+                placeholder="Escribe aquí tu comentario..."
+                maxlength="1000"
+                required
+                aria-describedby="char-counter-text error-comment"
+              ></textarea>
+
+              <!-- Indicador de verificación visual -->
+              <div class="status-indicator" aria-hidden="true">
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Contador dinámico de caracteres y barra de progreso -->
+            <div class="counter-bar-wrapper">
+              <div class="counter-info">
+                <span class="char-counter" id="char-counter-text">0 / 20 caracteres (te faltan 20 caracteres)</span>
+                <span style="font-size: 0.72rem; color: #9A6A47;">Mínimo: 20</span>
+              </div>
+              <div class="counter-progress">
+                <div class="counter-progress-fill" id="char-counter-progress"></div>
+              </div>
+            </div>
+
+            <!-- Mensaje de error animado -->
+            <div class="error-message" id="error-comment" role="alert" aria-live="polite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span class="error-text"></span>
+            </div>
+          </div>
+
+          <!-- BOTÓN PRINCIPAL DE ENVÍO -->
+          <div class="submit-btn-wrapper">
+            <button type="submit" id="submit-btn" class="submit-btn">
+              <span class="btn-text">ENVIAR MI MENSAJE</span>
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </span>
+              <span class="btn-loader" aria-hidden="true"></span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- TARJETA DE CONFIRMACIÓN ANIMADA (ESTADO DE ÉXITO) -->
+      <div id="confirmation-card" class="confirmation-card" aria-live="polite">
+        <div class="success-badge-container">
+          <div class="success-ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <h2 class="success-title">¡Mensaje enviado correctamente!</h2>
+        <p class="success-desc">
+          Gracias por tomarte el tiempo de escribirnos. Tu información ha sido registrada y notificada con éxito.
+        </p>
+
+        <!-- Resumen de datos enviados -->
+        <div class="success-summary">
+          <div class="summary-item">
+            <span class="summary-label">Nombre:</span>
+            <span class="summary-value" id="summary-name">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Correo:</span>
+            <span class="summary-value" id="summary-email">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Fecha y hora:</span>
+            <span class="summary-value" id="summary-date">-</span>
+          </div>
+        </div>
+
+        <button type="button" id="reset-form-btn" class="reset-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+            <path d="M8 16H3v5"></path>
+          </svg>
+          <span>Enviar otro mensaje</span>
+        </button>
+      </div>
+
+    </article>
+
+    <!-- Pie de página con mensaje de confianza -->
+    <footer class="form-footer">
+      <div class="footer-privacy-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>Tus datos están protegidos y solo se utilizarán para comunicarnos contigo.</span>
+      </div>
+      <p style="font-size: 0.75rem; color: #9A6A47; opacity: 0.8;">Diseñado con estética pastel e integración directa con Google Sheets y EmailJS.</p>
+    </footer>
+
+  </main>
+
+  <!-- MODAL DE CONFIGURACIÓN DE CONEXIONES (GOOGLE SHEETS Y EMAILJS) -->
+  <div id="config-modal" class="config-modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="config-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Ajustes de Conexión</span>
+        </h3>
+        <button type="button" class="modal-close-btn" id="close-config-btn" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <!-- Panel Google Sheets -->
+      <div class="service-card">
+        <div class="service-header">
+          <div class="service-name">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A7C32" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Google Sheets (Apps Script)</span>
+          </div>
+          <span class="service-status-pill pending" id="pill-sheets-status">Pendiente</span>
+        </div>
+        <p class="service-desc">
+          Almacena cada envío (Fecha y hora, Nombre, Correo, Comentario) en tu hoja de cálculo. Consulta <strong>instrucciones-google-sheets.md</strong> para obtener tu URL.
+        </p>
+        <div class="config-input-group">
+          <label class="config-input-label" for="config-sheets-url">URL de Aplicación Web de Apps Script:</label>
+          <input type="url" id="config-sheets-url" class="config-input" placeholder="https://script.google.com/macros/s/.../exec">
+        </div>
+      </div>
+
+      <!-- Panel EmailJS -->
+      <div class="service-card">
+        <div class="service-header">
+          <div class="service-name">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA5C9A" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>EmailJS (Notificaciones por Correo)</span>
+          </div>
+          <span class="service-status-pill pending" id="pill-emailjs-status">Pendiente</span>
+        </div>
+        <p class="service-desc">
+          Envía automáticamente una notificación por correo electrónico a tu buzón. Consulta <strong>instrucciones-emailjs.md</strong> para obtener tus claves.
+        </p>
+        <div class="config-input-group">
+          <label class="config-input-label" for="config-emailjs-public">Public Key (Clave Pública):</label>
+          <input type="text" id="config-emailjs-public" class="config-input" placeholder="Ej: user_abc123 o tu public key">
+        </div>
+        <div class="config-input-group">
+          <label class="config-input-label" for="config-emailjs-service">Service ID (ID de Servicio):</label>
+          <input type="text" id="config-emailjs-service" class="config-input" placeholder="Ej: service_contact">
+        </div>
+        <div class="config-input-group">
+          <label class="config-input-label" for="config-emailjs-template">Template ID (ID de Plantilla):</label>
+          <input type="text" id="config-emailjs-template" class="config-input" placeholder="Ej: template_contact">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancel-config-btn" onclick="document.getElementById('config-modal').classList.remove('is-open')">Cerrar</button>
+        <button type="button" class="btn-primary-sm" id="save-config-btn">Guardar Credenciales</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor para Notificaciones Toast Flotantes -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- SDK Oficial de EmailJS para Navegador -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Script Principal de la Aplicación -->
+  <script src="script.js"></script>
+
+</body>
+</html>
